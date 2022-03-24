@@ -16,10 +16,32 @@ let peliculasFavoritas = [
             protagonistas: ['Matthew McConaughe', 'Anne Hattaway', 'Michael Cane']
         }
 ]
+//funcion que muestra dato
+function mostrarDato(dato){
+    console.log(dato)
+}
+//funcion incrementar en 1 y mostrar
+function incrementoMuestra(num){
+    num = num + 1
+    mostrarDato(num)
+}
+//funcion agregar serie y mostrar
+function serieNueva(serie){
+    seriesFavoritas.push('GoT')
+    mostrarDato(serie)
+}
 //mostrando valores
-console.log(nombre)
-console.log(edad)
-console.log(precio)
-console.log(seriesFavoritas[0, 1, 2])
-console.log(peliculasFavoritas[0])
-console.log(peliculasFavoritas[1])
+mostrarDato(nombre)
+mostrarDato(edad)
+mostrarDato(precio)
+mostrarDato(seriesFavoritas[0, 1, 2])
+mostrarDato(peliculasFavoritas[0])
+mostrarDato(peliculasFavoritas[1])
+mostrarDato(peliculasFavoritas[0].nombre)
+mostrarDato(peliculasFavoritas[0].añoEstreno)
+mostrarDato(peliculasFavoritas[0].protagonistas)
+mostrarDato(peliculasFavoritas[1].nombre)
+mostrarDato(peliculasFavoritas[1].añoEstreno)
+mostrarDato(peliculasFavoritas[1].protagonistas)
+incrementoMuestra(edad)
+serieNueva(seriesFavoritas)
