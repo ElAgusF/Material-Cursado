@@ -47,3 +47,4 @@ cliente2.contar()
 cliente2.contar() 
 console.log(cliente2.obtenerCuentaIndividual()) 
 console.log(obtenerCuentaGlobal())
+ 
