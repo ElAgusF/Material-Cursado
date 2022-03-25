@@ -30,4 +30,4 @@ const doble = crearMultiplicador(2)
 const triple = crearMultiplicador(3)
 
 console.log(doble(48))
-console.log(triple(32))
+console.log(triple(32)) 
