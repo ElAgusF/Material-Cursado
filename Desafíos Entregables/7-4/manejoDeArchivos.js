@@ -27,6 +27,7 @@ class Contenedor{
         try {
             const datos = await fs.promises.readFile(this.ruta, 'utf-8')
             console.log(JSON.parse(datos))
+            return JSON.parse(datos)
         } catch (error) {
             console.log(error)
         }
@@ -95,13 +96,7 @@ const producto3 = {
     thumbnail: 'https://cdn1.iconfinder.com/data/icons/office-196/100/Ballpoint_Pen-256.png',
     id: []
 }
-setTimeout(function () {contenedor.save(producto1)}, 200)
-setTimeout(function () {contenedor.save(producto2)}, 400)
-setTimeout(function () {contenedor.save(producto3)}, 600)
-setTimeout(function (){contenedor.getById(2)}, 1_000)
-setTimeout(function (){contenedor.getById(4)}, 1_200)
-//setTimeout(function (){contenedor.deleteById(1)}, 1_400)
-setTimeout(function (){contenedor.getAll()}, 1_600)
-//setTimeout(function (){contenedor.deleteAll()}, 5_000 )
+
+module.exports = Contenedor
 
 
