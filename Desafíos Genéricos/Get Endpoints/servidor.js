@@ -31,7 +31,7 @@ app.get('/api/palabras/:num', (req, res) =>{
         res.send({error: `El parámetro está fuera de rango`})
     }
 
-    res.json({letra: palabras[num - 1]})
+    res.json({palabra: palabras[num - 1]})
 })
 
 
