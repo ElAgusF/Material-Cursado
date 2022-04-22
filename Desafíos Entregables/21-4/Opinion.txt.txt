@@ -1,0 +1,1 @@
+Para mi proyecto elijo usar handlebars debido a que con mi poco conocimiento de Front End fue el más "didactico". La herramienta de {{this.}} es muy útil. Pug es muy confuso al igual que ejs con la combinacion de html y js en un mismo archivo.
