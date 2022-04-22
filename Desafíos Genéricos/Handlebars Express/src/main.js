@@ -1,5 +1,5 @@
 const express = require('express')
-const exphbs = require('express-handlebars')
+const exphbs = require('express-handlebars').engine
 
 const app = express()
 
@@ -8,7 +8,7 @@ const hbsConfig = {
     defaultLayout: 'index.hbs' 
 }
 
-app.engine('hbs', exphbs.engine(hbsConfig))
+app.engine('hbs', exphbs(hbsConfig))
 
 app.set('engine', 'hbs')
 app.set('views', './views')
