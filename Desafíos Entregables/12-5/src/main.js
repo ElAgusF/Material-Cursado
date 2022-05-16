@@ -1,5 +1,8 @@
 const express = require('express')
-const fs = require('fs')
+
+const connection = require('./config/index.js')
+const knexMariaDB = require('knex')(connection.mariaDBConfig)
+const knexSqlite = require('knex')(connection.sqliteConfig)
 
 const { Server: HttpServer } = require('http')
 const { Server: Socket } = require('socket.io')
@@ -13,23 +16,38 @@ const mensajes = []
 
 //configuracion de socket
 
-io.on('connection', socket =>{
+io.on('connection', async socket =>{
     //parte productos
-    socket.emit('productos', productos)
+    knexMariaDB
+        .select()
+        .table('productos')
+        .then((productos) => {
+            socket.emit('productos', productos)
+        });
 
-    socket.on('update', producto => {
+    knexSqlite
+        .select()
+        .table('mensajes')
+        .then((mensajes) =>{
+            socket.emit('mensajesActualizados', mensajes )
+        });
+
+    socket.on('update', async (producto) => {
+        await knexMariaDB('productos').insert(producto)
         productos.push(producto)
         io.sockets.emit('productos', productos)
     })
 
     //parte mensajes
-    socket.emit('mensajesActualizados', mensajes )
 
-    socket.on('nuevoMensaje', async mensaje => {
-        mensaje.fecha = new Date().toLocaleString()
-        mensajes.push(mensaje)
-        await fs.promises.writeFile('mensajes.txt', JSON.stringify(mensajes), 'utf-8')
-        io.sockets.emit('mensajesActualizados', mensajes)
+    socket.on('nuevoMensaje', async (mensaje) => {
+        await knexSqlite('mensajes').insert(mensaje)
+        knexSqlite.select().table('mensajes').then(mensajes =>{
+            mensaje.fecha = new Date().toLocaleString()
+            mensajes.push(mensaje)
+            io.sockets.emit('mensajesActualizados', mensajes)
+
+        })
     })
 
 });
