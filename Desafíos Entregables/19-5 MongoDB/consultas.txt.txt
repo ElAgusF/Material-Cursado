@@ -1,0 +1,53 @@
+mongod --dbpath "C:\Users\leto_\Desktop\Códigos\Curso BackEnd\Material Cursado\Desafíos Entregables\19-5 MongoDB\data"
+mongo 
+use ecommerce
+db.productos.insertOne({id: 1, name: "Reloj de mano", description: "descripcion del producto", price: 800, stock: 5, thumnail:"https://cdn4.iconfinder.com/data/icons/objects-2-3/50/155-512.png"})
+//para ver si se cargaron correctamente
+db.productos.find().pretty()
+//solo lo escribo una vez aca pero lo uso para verificar cada producto añadido
+db.productos.insertOne({id: 2, name: "Cartuchera", description: "descripcion del producto", price: 580, stock: 17, thumnail:"https://cdn4.iconfinder.com/data/icons/back-to-school-151/64/pencil-case-office-tool-education-256.png"})
+db.productos.insertOne({id: 3, name: "Lapicera", description: "descripcion del producto", price: 120, stock: 33, thumnail:"https://cdn1.iconfinder.com/data/icons/office-196/100/Ballpoint_Pen-256.png"})
+db.productos.insertOne({id: 4, name: "Escuadra", description: "descripcion del producto", price: 190, stock: 50, thumnail:"https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"})
+db.productos.insertOne({id: 5, name: "Calculadora", description: "descripcion del producto", price: 900, stock: 45, thumnail:"https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png"})
+db.productos.insertOne({id: 6, name: "Globo terraqueo", description: "descripcion del producto", price: 1280, stock: 66, thumnail:"https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png"})
+db.productos.insertOne({id: 7, name: "Termo", description: "descripcion del producto", price: 1700, stock: 23, thumnail:"https://cdn4.iconfinder.com/data/icons/kamp-color/32/thermos-256.png"})
+db.productos.insertOne({id: 8, name: "Teclado de computadora", description: "descripcion del producto", price: 2300, stock: 11, thumnail:"https://cdn1.iconfinder.com/data/icons/hardware-and-devices/64/Hardware_devices_keyboard-256.png"})
+db.productos.insertOne({id: 9, name: "Billetera de cuero", description: "descripcion del producto", price: 2860, stock: 16, thumnail:"https://cdn2.iconfinder.com/data/icons/basic-flat-icon-set/128/wallet-256.png"})
+db.productos.insertOne({id: 10, name: "Parrilla", description: "descripcion del producto", price: 3350, stock: 76, thumnail:"https://cdn2.iconfinder.com/data/icons/gardening-caramel-vol-2/256/GRILL-256.png"})
+//mensajes
+db.mensajes.insertOne({email: "agus@fasano", date: new Date(), content: "Hola, buenas tardes"})
+db.mensajes.insertOne({email: "agus@fasano", date: new Date(), content: "Quisiera consultar por el stock de Lapiceras"})
+db.mensajes.insertOne({email: "coder@house", date: new Date(), content: "Hola agus@fasano, buenas tardes"})
+db.mensajes.insertOne({email: "coder@house", date: new Date(), content: "Tenemos stock de Lapiceras!"})
+db.mensajes.insertOne({email: "agus@fasano", date: new Date(), content: "Buenisimo!"})
+db.mensajes.insertOne({email: "agus@fasano", date: new Date(), content: "Voy a proceder a realizar el pedido"})
+db.mensajes.insertOne({email: "agus@fasano", date: new Date(), content: "Muchas gracias por la atencion"})
+db.mensajes.insertOne({email: "coder@house", date: new Date(), content: "Perfecto, nos alegramos que nos elijas"})
+db.mensajes.insertOne({email: "agus@fasano", date: new Date(), content: "Ya lo realicé"})
+db.mensajes.insertOne({email: "coder@house", date: new Date(), content: "Enseguida despachamos para su entrega"})
+//listando mensajes
+db.mensajes.find().pretty()
+//contando la cantidad de documentos de las colecciones
+db.productos.estimatedDocumentCount()
+db.mensajes.estimatedDocumentCount()
+//CRUD
+//a
+db.productos.insertOne({id: 11, name: "Parlante", description: "descripcion del producto", price: 4320, stock: 32, thumnail:"https://cdn4.iconfinder.com/data/icons/materia-color-music-vol-1/24/001_064_audio_speaker_music_boombox_radio_sound-256.png"})
+//b
+//i
+db.productos.find({price: {$lt:1000}}).pretty()
+//ii
+db.productos.find({price:{$gte:1000, $lte:3000}}).pretty()
+//iii
+db.productos.find({price: {$gt:3000}}).pretty()
+//iv
+db.productos.find({},{name:1, _id:0}).sort({price:1}).skip(2).limit(1).pretty()
+//c
+db.productos.updateMany({name:{$exists:1}}, {$set:{stock:100}})
+//d
+db.productos.updateMany({price:{$gt:4000}}, {$set:{stock:0}})
+//e
+db.productos.deleteMany({price:{$lt:1000}})
+//6
+use admin
+db.createUser({user:"pepe", pwd:"asd456", roles:[{role: "read", db:"ecommerce"}]})
