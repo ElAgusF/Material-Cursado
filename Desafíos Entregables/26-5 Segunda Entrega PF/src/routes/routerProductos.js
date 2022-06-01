@@ -1,22 +1,31 @@
-const {Router} = require('express')
+import { Router } from 'express'
 
-const {soloAdmin, login, logout, listAll, getOne, postOne, putOne, deleteOne} = require('../controllers/productos.controller')
+import productosCtrl from '../controllers/productos.controller.js'
+//const {soloAdmin, login, logout, listAll, getOne, postOne, putOne, deleteOne} = require('../controllers/productos.controller')
 
-const routerProductos = Router()
+const routerProductos = new Router()
 
-routerProductos.route('/login')
-    .get(login)
+routerProductos.get('/login', productosCtrl.login)
+//routerProductos.route('/login')
+//    .get(login)
 
-routerProductos.route('/logout')
-    .get(logout)
+routerProductos.get('/logout', productosCtrl.logout)
+//routerProductos.route('/logout')
+//    .get(logout)
 
-routerProductos.route('/')
-    .get(listAll)
-    .post(soloAdmin, postOne)
+routerProductos.get('/', productosCtrl.listAll)
+routerProductos.post('/', productosCtrl.soloAdmin, productosCtrl.postOne)
+//routerProductos.route('/')
+//    .get(listAll)
+//    .post(soloAdmin, postOne)
 
-routerProductos.route('/:id')
-    .get(getOne)
-    .put(soloAdmin, putOne)
-    .delete(soloAdmin, deleteOne)
+routerProductos.get('/:id', productosCtrl.getOne)
+routerProductos.put('/:id', productosCtrl.soloAdmin, productosCtrl.putOne)
+routerProductos.delete('/:id', productosCtrl.soloAdmin, productosCtrl. deleteOne)
+//routerProductos.route('/:id')
+//    .get(getOne)
+//    .put(soloAdmin, putOne)
+//    .delete(soloAdmin, deleteOne)
 
-module.exports = routerProductos;
+export default routerProductos
+    //module.exports = routerProductos;

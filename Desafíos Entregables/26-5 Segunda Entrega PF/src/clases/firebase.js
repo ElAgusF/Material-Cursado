@@ -1,8 +1,14 @@
-import fs from 'fs'
+import admin from 'firebase-admin'
+import config from '../config.js'
 
-class Contenedor {
-    constructor(fileName){
-        this.fileName = fileName
+admin.initializeApp({
+  credential: admin.credential.cert(config.firebase)
+})
+const db = admin.firestore()
+
+class fireBase{
+    constructor(nombreColeccion){
+        this.coleccion = db.collection(nombreColeccion)
     }
 
     async readFile(){
@@ -13,11 +19,11 @@ class Contenedor {
         }
     }
 
-    async writeFile(data){
+    async writeFile(data) {
         try {
-            fs.promises.writeFile(`./DB/${this.fileName}.json`, JSON.stringify(data), 'utf-8')
+            fs.promises.writeFile(`DB/${this.fileName}.json`, JSON.stringify(data), 'utf-8')
         } catch (error) {
-            console.log(error)
+            console.log(`ERROR: ${error}`)
         }
     }
 
@@ -120,6 +126,23 @@ class Contenedor {
             console.log(error)
         }
     }
+
+    async borrarAll() {
+        try {
+            const docs = await this.listarAll()
+            const ids = docs.map(d => d.id)
+            const promesas = ids.map(id => this.borrar(id))
+            const resultados = await Promise.allSettled(promesas)
+            const errores = resultados.filter(r => r.status == 'rejected')
+            if (errores.length > 0) {
+                throw new Error('no se borró todo. volver a intentarlo')
+            }
+        } catch (error) {
+            throw new Error(`Error al borrar: ${error}`)
+        }
+    }
+
+    async desconectar() {}
 }
 
-export default Contenedor
+export default fireBase

@@ -1,16 +1,26 @@
 {
+  "type": "module",
   "name": "26-5-segunda-entrega-pf",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start":"node src/server.js",
+    "start:archivo":"cross-env DB_RUTA=json node src/server.js",
+    "start:mongo":"cross-env DB_RUTA=mongodb node .",
+    "start:firebase":"cross-env DB_RUTA=firebase node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "firebase-admin": "^10.2.0",
+    "mongodb": "^4.6.0",
+    "mongoose": "^6.3.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

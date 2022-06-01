@@ -1,23 +1,21 @@
-const { createSecretKey } = require('crypto')
-const Contenedor = require('../clases/contenedor')
-const carritos = new Contenedor('carritos')
-const productos = new Contenedor('productos')
+import { carritoDao } from "../daos/carritos/index.js"
+import { productosDao } from "../daos/productos/index.js"
 
-const carritosCtrl = {}
+const carritosCtrl = {
 
-carritosCtrl.listAll = async (req, res) =>{
+listAll:  async (req, res) =>{
     try {
-        const allCarts = await carritos.getAll()
+        const allCarts = await carritoDao.getAll()
         res.json(allCarts)
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-carritosCtrl.getOne = async (req, res) => {
+getOne:  async (req, res) => {
     try {
         const id = req.params.id
-        const tempCart = await carritos.getByID(id)
+        const tempCart = await carritoDao.getByID(id)
 
         if (!tempCart) {
             res.json({error: `Carrito no encontrado.`})
@@ -27,12 +25,12 @@ carritosCtrl.getOne = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-carritosCtrl.listProducts = async (req, res) =>{
+listProducts: async (req, res) =>{
     try {
         const id = req.params.id
-        const tempCart = await carritos.getByID(id)
+        const tempCart = await carritoDao.getByID(id)
 
         if (!tempCart) {
             res.json({error: `Carrito no encontrado.`})
@@ -42,11 +40,11 @@ carritosCtrl.listProducts = async (req, res) =>{
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-carritosCtrl.createOne = async (req, res) =>{
+createOne: async (req, res) =>{
     try {
-        const allCarts = await carritos.getAll()
+        const allCarts = await carritoDao.getAll()
 
         const getNewId = () => {
             let lastID = 0
@@ -61,64 +59,64 @@ carritosCtrl.createOne = async (req, res) =>{
             productos: [],
         }
 
-        await carritos.addItem(newCart)
+        await carritoDao.addItem(newCart)
         res.json(newCart.id)
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-carritosCtrl.addProduct = async (req, res) => {
+addProduct: async (req, res) => {
     try {
         const cartID = req.params.id
         const prodID = req.params.id_prod
 
-        const cartFound = await carritos.getByID(cartID)
-        const productFound = await productos.getByID(prodID)
+        const cartFound = await carritoDao.getByID(cartID)
+        const productFound = await productosDao.getByID(prodID)
 
         if (!cartFound) {
             res.json({error: 'No se encontró el carrito'})
         } else if (!productFound) {
             res.json({error: 'No se encontró el producto'})
         } else{
-            await carritos.addItemToCart(cartFound.id, productFound)
+            await carritoDao.addItemToCart(cartFound.id, productFound)
             res.json({status: 'Producto añadido al carrito.'})
         }
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-carritosCtrl.deleteProduct = async (req, res) => {
+deleteProduct: async (req, res) => {
     try {
         const cartID = req.params.id
         const prodID = req.params.id_prod
 
-        const cartFound = await carritos.getByID(cartID)
-        const productFound = await productos.getByID(prodID)
+        const cartFound = await carritoDao.getByID(cartID)
+        const productFound = await productosDao.getByID(prodID)
 
         if (!cartFound) {
             res.json({error: 'No se encontró el carrito'})
         } else if (!productFound) {
             res.json({error: 'No se encontró el producto'})
         } else{
-            await carritos.removeItemFromCart(cartFound.id, productFound.id)
+            await carritoDao.removeItemFromCart(cartFound.id, productFound.id)
             res.json({status: 'Producto eliminado del carrito.'})
         }
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-carritosCtrl.deleteOne = async (req, res) => {
+deleteOne: async (req, res) => {
     try {
         const id = req.params.id
-        const tempCart = await carritos.getByID(id)
+        const tempCart = await carritoDao.getByID(id)
 
         if (!tempCart) {
             res.json({error: 'No se encontró el carrito.'})
         } else {
-            await carritos.emptyCart(id)
+            await carritoDao.emptyCart(id)
             res.json({status: 'Carrito eliminado.'})
         }
     } catch (error) {
@@ -126,4 +124,7 @@ carritosCtrl.deleteOne = async (req, res) => {
     }
 }
 
-module.exports = carritosCtrl;
+}
+
+//export default {listAll, getOne, listProducts, createOne, addProduct, deleteProduct, deleteOne}
+export default carritosCtrl

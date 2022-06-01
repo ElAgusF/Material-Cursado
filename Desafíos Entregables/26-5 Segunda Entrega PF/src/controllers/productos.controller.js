@@ -1,40 +1,39 @@
-const Contenedor = require('../clases/contenedor')
-const productos = new Contenedor('productos')
+import { productosDao } from "../daos/productos/index.js"
 
-const productosCtrl = {}
 let esAdmin = false
+const productosCtrl = {
 
-productosCtrl.soloAdmin = (req, res, next) => {
+soloAdmin:  (req, res, next) => {
     if (esAdmin) {
         next()
     } else {
         res.status(403).json({error: -1, descripcion: `ruta '${req.originalUrl}' y método ${req.method} no autorizados`})
     }
-}
+},
 
-productosCtrl.login = (req,res) => {
+login: (req,res) => {
     esAdmin = true
     res.sendStatus(200)
-}
+},
 
-productosCtrl.logout = (req,res) => {
+logout:  (req,res) => {
     esAdmin = false
     res.sendStatus(200)
-}
+},
 
-productosCtrl.listAll = async (req,res) => {
+listAll: async (req,res) => {
     try {
-        const allProducts = await productos.getAll()
+        const allProducts = await productosDao.getAll()
         res.json(allProducts)
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-productosCtrl.getOne = async (req, res) => {
+getOne: async (req, res) => {
     try {
         const id = req.params.id
-        const tempProducto = await productos.getByID(id)
+        const tempProducto = await productosDao.getByID(id)
 
         if (!tempProducto) {
             res.send({error: 'No se encuentra el producto.'})
@@ -44,11 +43,11 @@ productosCtrl.getOne = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-productosCtrl.postOne = async (req, res) => {
+postOne: async (req, res) => {
     try {
-        const allProducts = await productos.getAll()
+        const allProducts = await productosDao.getAll()
         
         const getNewId = () => {
         let lastID = 0
@@ -67,18 +66,18 @@ productosCtrl.postOne = async (req, res) => {
         stock: req.body.stock ? req.body.stock : 'Sin stock especificado',
       }
 
-      await productos.addItem(newProduct)
+      await productosDao.addItem(newProduct)
       res.json({status: `producto añadido`})
 
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-productosCtrl.putOne = async (req, res) => {
+putOne: async (req, res) => {
     try {
         const id = req.params.id
-        const tempProducto = await productos.getByID(id)
+        const tempProducto = await productosDao.getByID(id)
 
         if (!tempProducto) {
             res.send({error: 'No se encontró el producto.'})
@@ -91,19 +90,19 @@ productosCtrl.putOne = async (req, res) => {
                 precio: req.body.precio ? req.body.precio : tempProducto.precio,
                 stock: req.body.stock ? req.body.stock : tempProducto.stock,
             }
-            await productos.editByID(editProducto)
+            await productosDao.editByID(editProducto)
 
             res.json({status: `producto actualizado`})
         }
     } catch (error) {
         console.log(error)
     }
-}
+},
 
-productosCtrl.deleteOne = async (req, res) => {
+deleteOne: async (req, res) => {
     try {
         const id = req.params.id
-        const respuesta = await productos.deleteByID(id)
+        const respuesta = await productosDao.deleteByID(id)
         if (!respuesta) {
             res.json({error: `El producto con id ${id} no existe`})
         } else {
@@ -113,5 +112,6 @@ productosCtrl.deleteOne = async (req, res) => {
         console.log(error)
     }
 }
-
-module.exports = productosCtrl;
+}
+export default productosCtrl
+//export default {soloAdmin, login, logout, listAll, getOne, postOne, putOne, deleteOne}
