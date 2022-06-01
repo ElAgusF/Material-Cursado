@@ -7,8 +7,8 @@
   "scripts": {
     "start":"node src/server.js",
     "start:archivo":"cross-env DB_RUTA=json node src/server.js",
-    "start:mongo":"cross-env DB_RUTA=mongodb node .",
-    "start:firebase":"cross-env DB_RUTA=firebase node .",
+    "start:mongo":"cross-env DB_RUTA=mongodb node src/server.js",
+    "start:firebase":"cross-env DB_RUTA=firebase node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

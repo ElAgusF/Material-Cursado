@@ -1,8 +1,8 @@
 import Contenedor from "../../clases/contenedor.js"
 
 class ProductosDaoArchivo extends Contenedor{
-    constructor(filename){
-        super(filename)
+    constructor(fileName){
+        super(fileName)
     }
 }
 

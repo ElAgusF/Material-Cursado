@@ -7,7 +7,7 @@ class Contenedor {
 
     async readFile(){
         try {
-            return JSON.parse(await fs.promises.readFile(`./DB/${this.fileName}.json`, 'utf-8'))
+            return JSON.parse(await fs.promises.readFile(`DB/${this.fileName}.json`, 'utf-8'))
         } catch (error) {
             console.log(error)
         }
@@ -15,7 +15,7 @@ class Contenedor {
 
     async writeFile(data){
         try {
-            fs.promises.writeFile(`./DB/${this.fileName}.json`, JSON.stringify(data), 'utf-8')
+            fs.promises.writeFile(`DB/${this.fileName}.json`, JSON.stringify(data), 'utf-8')
         } catch (error) {
             console.log(error)
         }

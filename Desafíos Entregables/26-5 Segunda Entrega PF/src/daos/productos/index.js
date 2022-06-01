@@ -2,7 +2,7 @@ import config from '../../config.js'
 
 let productosDao
 
-switch (process.env.PERS) {
+switch (process.env.DB_RUTA) {
     case 'json':
         const { default: ProductosDaoArchivo } = await import('./ProductosDaoArchivo.js')
         productosDao = new ProductosDaoArchivo('productos')
