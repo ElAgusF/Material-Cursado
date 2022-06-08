@@ -46,7 +46,7 @@ async function manejarEventoProductos(productos){
 
 function mostrarMensajes(mensajes){
     const mensajesParaMostrar = mensajes.map(({fecha, autor, texto}) =>{
-        return `<span style="color:blue;"><b>${autor}</b></span> <span style="color:brown;">[${fecha}]:</span> <span style="color:green;"><i>${texto}</i></span>`
+        return `<span style="color:blue;"><b>${autor}</b></span> <span style="color:brown;">[${fecha}]:</span> <span style="color:green;"><i>${texto}</i></span><img width="30" src='${avatar}' + '.png\' alt="not found">`
     })
     
     const mensajesHtml = `${mensajesParaMostrar.join('<br>')}`
@@ -62,14 +62,24 @@ socket.on('mensajesActualizados', mensajes =>{
 const botonEnviar = document.getElementById('botonEnviar')
 botonEnviar.addEventListener('click', e => {
     const inputAutor = document.getElementById('inputAutor')
+    const inputNombre = document.getElementById('inputNombre')
+    const inputApellido = document.getElementById('inputApellido')
+    const inputEdad = document.getElementById('inputEdad')
+    const inputAlias = document.getElementById('inputAlias')
     const inputMensaje = document.getElementById('inputMensaje')
-    if (inputAutor.value && inputMensaje.value) {
+    const inputAvatar = document.getElementById('inputAvatar')
+    if (inputAutor.value && inputMensaje.value && inputAvatar.value) {
         const mensaje = {
             autor: inputAutor.value,
-            texto: inputMensaje.value
+            nombre: inputNombre.value,
+            apellido: inputApellido.value,
+            edad: inputEdad.value,
+            alias: inputAlias.value,
+            texto: inputMensaje.value,
+            avatar: inputAvatar.value
         }
         socket.emit('nuevoMensaje', mensaje)
     } else {
-        alert('ingrese algun mensaje')
+        alert('Faltan datos necesarios')
     }
 })

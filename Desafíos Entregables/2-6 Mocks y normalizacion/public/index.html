@@ -46,24 +46,49 @@
     <div class="container mt-3">
         <div class="jumbotron">
             <h1>Mensajes</h1>
-
-            
+    
+    
             <div class="form-group">
                 <label for="email">Email</label>
                 <input id="inputAutor" class="form-control" type="text" name="email" placeholder="Email" required>
             </div>
-        
+    
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Nombre" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input id="inputApellido" class="form-control" type="text" name="apellido" placeholder="Apellido" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="edad">Edad</label>
+                <input id="inputEdad" class="form-control" type="text" name="edad" placeholder="Edad" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="alias">Alias</label>
+                <input id="inputAlias" class="form-control" type="text" name="alias" placeholder="Alias" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="avatar">Avatar</label>
+                <input id="inputAvatar" class="form-control" type="text" name="avatar" placeholder="Avatar URL" required>
+            </div>
+    
             <div class="form-group">
                 <label for="msg">Mensaje</label>
                 <input id="inputMensaje" class="form-control" type="text" name="msg" placeholder="Mensaje" required>
             </div>
-        
+    
             <button id="botonEnviar" class="btn btn-success mt-3">Enviar Mensaje</button>
-           
+    
             <br>
             <div id="listaMensajes"></div>
         </div>
-
+    
     </div>
     
     <script src="js/main.js"></script>
