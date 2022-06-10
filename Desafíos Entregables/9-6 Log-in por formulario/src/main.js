@@ -23,6 +23,19 @@ const { Server: Socket } = require('socket.io')
 const Contenedor = require('./contenedor/contenedorArchivo.js')
 
 const app = express()
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: `mongodb+srv://root:M!BsDUrN4HAEkez@cluster0.kfscxhy.mongodb.net/test`,
+        mongoOptions: advancedOptions
+    }),
+    secret: 'shhhhhhhhhhhhhhhhhhhhh',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        username: 'pepe',
+        maxAge: 30
+    }
+}))
 const httpServer = new HttpServer(app)
 const io = new Socket(httpServer)
 
